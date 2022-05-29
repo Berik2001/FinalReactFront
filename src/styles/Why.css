@@ -1,0 +1,133 @@
+.why_section_h {
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 25px;
+  padding-top: 20px;
+  color: rgb(235, 226, 226);
+}
+.item svg {
+  margin-top: 20px;
+}
+.item {
+  margin-top: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 30vh;
+}
+.why {
+  background-color: rgb(77, 166, 77);
+}
+.service_title {
+  width: 90%;
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 22px;
+  text-align: center;
+  margin-top: 20px;
+  color: rgb(235, 226, 226);
+}
+
+/* Media Query */
+@media screen and (max-width: 1000px) {
+  .why_section_h {
+    font-family: "Montserrat";
+    font-weight: 500;
+    font-size: 18px;
+    color: rgb(235, 226, 226);
+  }
+  .item {
+    margin-top: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 30vh;
+  }
+  .service_title {
+    width: 90%;
+    font-family: "Montserrat";
+    font-weight: 500;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+    color: rgb(235, 226, 226);
+  }
+}
+@media screen and (max-width: 825px) {
+  .why_section_h {
+    font-family: "Montserrat";
+    font-weight: 500;
+    font-size: 18px;
+    color: rgb(235, 226, 226);
+  }
+  .item {
+    margin-top: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 30vh;
+  }
+  .service_title {
+    width: 90%;
+    font-family: "Montserrat";
+    font-weight: 500;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+    color: rgb(235, 226, 226);
+  }
+}
+@media screen and (max-width: 715px) {
+  .why_section_h {
+    font-family: "Montserrat";
+    font-weight: 500;
+    font-size: 18px;
+    color: rgb(235, 226, 226);
+  }
+  .item {
+    margin-top: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 30vh;
+  }
+  .service_title {
+    width: 90%;
+    font-family: "Montserrat";
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 20px;
+    color: rgb(235, 226, 226);
+  }
+}
+
+@media screen and (max-width: 535px) {
+  .why_section_h {
+    font-family: "Montserrat";
+    font-weight: 500;
+    font-size: 18px;
+    color: rgb(235, 226, 226);
+  }
+  .item {
+    margin-top: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 30vh;
+  }
+  .service_title {
+    width: 90%;
+    font-family: "Montserrat";
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 20px;
+    color: rgb(235, 226, 226);
+  }
+}
