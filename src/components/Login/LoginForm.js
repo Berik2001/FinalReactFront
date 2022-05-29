@@ -4,22 +4,46 @@ import { Container } from 'react-bootstrap';
 import '../../styles/Auth.css';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../../services/auth.service';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 const LoginForm = () => {
   const nav = useNavigate();
-
   const [user, setUsers] = useState({
     username: '',
     password: '',
   });
   const { username, password } = user;
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal, open } = state;
+  const handleClick = (newState) => {
+    setState({ open: true, ...newState });
+  };
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
+
   const onInputChange = (e) => {
     setUsers({ ...user, [e.target.name]: e.target.value });
   };
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
   const login = async (e) => {
     AuthService.login(user).then((response) => {
       debugger;
-      !!response.authenticationToken ? nav('/') : alert('Ошибка');
+      !!response.authenticationToken
+        ? nav('/')
+        : handleClick({
+            vertical: 'top',
+            horizontal: 'center',
+          });
     });
   };
   return (
@@ -43,13 +67,13 @@ const LoginForm = () => {
                     type="text"
                     id="form3Example3"
                     className="form-control form-control-lg"
-                    placeholder="Enter a valid email address"
+                    placeholder="Enter a valid username"
                     name="username"
                     value={username}
                     onChange={(e) => onInputChange(e)}
                   />
                   <label className="form-label" for="form3Example3">
-                    Email address
+                    Username
                   </label>
                 </div>
 
@@ -80,6 +104,16 @@ const LoginForm = () => {
                     Don't have an account? <Link to="/register">Register</Link>
                   </p>
                 </div>
+                <Snackbar
+                  anchorOrigin={{ vertical, horizontal }}
+                  open={open}
+                  onClose={handleClose}
+                  message="I love snacks"
+                  key={vertical + horizontal}>
+                  <Alert severity="error" onClose={handleClose} sx={{ width: '100%' }}>
+                    Такой логин или пароль не существует!!!
+                  </Alert>
+                </Snackbar>
               </form>
             </div>
           </div>
