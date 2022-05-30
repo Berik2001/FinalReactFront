@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@date-io/dayjs": "^2.14.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.8.0",
@@ -16,6 +17,7 @@
     "jquery": "^3.6.0",
     "react": "^18.1.0",
     "react-bootstrap": "^2.4.0",
+    "react-datepicker": "^4.8.0",
     "react-dom": "^18.1.0",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",

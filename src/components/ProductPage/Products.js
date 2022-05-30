@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Container, Row, Col, Image } from 'react-bootstrap';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import ProductService from '../../services/ProductService';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -19,13 +19,16 @@ const style = {
 };
 
 const Products = () => {
+  const navigate = useNavigate();
   let { id } = useParams();
   const [selectedProduct, setSelectedProduct] = useState();
   const [open, setOpen] = useState(false);
   const handleOpen = (id) => {
-    debugger;
     setOpen(true);
     setSelectedProduct(products.find((i) => i.id == id));
+  };
+  const toOrder = () => {
+    navigate('/booking', { state: { product: selectedProduct } });
   };
   const handleClose = () => setOpen(false);
   const [products, setProducts] = useState([]);
@@ -85,7 +88,7 @@ const Products = () => {
               Price: {selectedProduct.price}
             </Typography>
 
-            <Button>Rent</Button>
+            <Button onClick={toOrder}>Rent</Button>
           </Box>
         </Modal>
       )}

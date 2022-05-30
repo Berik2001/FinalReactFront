@@ -13,6 +13,7 @@ import Register from './pages/Register.js';
 import SpecificProduct from './components/ProductPage/SpecificProduct';
 import FormProduct from './pages/FormProduct.js';
 import AdminHome from './pages/AdminTable';
+import Booking from './pages/Booking';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/delivery" element={<Delivery />} />
           <Route path="/review" element={<Review />} />
           <Route path="/admin/forms" element={<AdminHome />} />
+          <Route path="/booking" element={<Booking />} />
         </Routes>
       </Router>
     </div>
