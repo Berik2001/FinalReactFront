@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Card, Row, Col, Image } from 'react-bootstrap';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -11,7 +12,13 @@ import { useLocation } from 'react-router-dom';
 
 const Booking = () => {
   const location = useLocation();
+  const [currentProduct, setCurrentProduct] = useState();
+  const [totalCount, setTotalCount] = useState();
 
+  useEffect(() => {
+    setCurrentProduct(location.state.product);
+    setTotalCount(location.state.product.price);
+  }, []);
   console.log(location);
   const [startDate, setStartDate] = useState(new Date());
   const [counter, setCounter] = useState(1);
@@ -24,33 +31,40 @@ const Booking = () => {
   };
   return (
     <React.Fragment>
-      <CssBaseline />
-      <Container fixed>
-        <Grid container spacing={2}>
-          <Grid item xs={8}>
-            Выберите период аренды
-            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-          </Grid>
-          <Grid item xs={4}>
-            Стоимость техники 50000
-          </Grid>
-          <Grid item xs={4}></Grid>
-          <Grid item xs={4}>
-            Цена в сутки
-          </Grid>
-          <Grid item xs={8}>
-            Итоговая сумма
-          </Grid>
-          <Grid item xs={8}>
-            <ButtonGroup size="small" aria-label="small outlined button group">
-              <Button onClick={handleIncrement}>+</Button>
-              {counter > 0 && <Button disabled>{counter}</Button>}
-              {counter > 0 && <Button onClick={handleDecrement}>-</Button>}
-            </ButtonGroup>
-          </Grid>
-        </Grid>
-      </Container>
+      {currentProduct && (
+        <div class="container">
+          <div class="card">
+            <div class="form">
+              <div class="left-side">
+                <div class="fashion">
+                  <h3>{currentProduct.category.name}</h3>
+                </div>
+                <div class="images">
+                  <span>
+                    <img src={currentProduct.image} />
+                  </span>
+                </div>
+              </div>
+              <div class="right-side">
+                <h3>{currentProduct.name}</h3>
+                <h4>{currentProduct.price}</h4>
+                <div>
+                  <ButtonGroup size="small" aria-label="small outlined button group">
+                    <Button onClick={handleIncrement}>+</Button>
+                    {counter > 0 && <Button disabled>{counter}</Button>}
+                    {counter > 0 && <Button onClick={handleDecrement}>-</Button>}
+                  </ButtonGroup>
+                </div>
+                <Button variant="primary">Арендовать</Button>
+                <div class="description">
+                  <h4>Описание товара</h4>
+                  <p>{currentProduct.description}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </React.Fragment>
   );
 };

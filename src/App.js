@@ -16,6 +16,8 @@ import AdminHome from './pages/AdminTable';
 import Booking from './pages/Booking';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ProductTable from './components/AdminPage/ProductTable';
+import CategoryTable from './components/AdminPage/CategoryTable';
 function App() {
   return (
     <div className="App">
@@ -35,6 +37,8 @@ function App() {
           <Route path="/review" element={<Review />} />
           <Route path="/admin/forms" element={<AdminHome />} />
           <Route path="/booking" element={<Booking />} />
+          <Route path="/admin/products" element={<ProductTable />} />
+          <Route path="/admin/category" element={<CategoryTable />} />
         </Routes>
       </Router>
     </div>

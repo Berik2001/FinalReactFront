@@ -82,8 +82,10 @@ const Header = () => {
               <Nav.Link href="/delivery">Доставка</Nav.Link>
               <Nav.Link href="/contacts">Контакты</Nav.Link>
               <Nav.Link href="/about">О нас</Nav.Link>
-              <Nav.Link href="/admin/forms">Административная панель</Nav.Link>
               <Nav.Link href="/booking"> панель</Nav.Link>
+              <Nav.Link href="/admin/products"> Продукты</Nav.Link>
+              <Nav.Link href="/admin/category"> Категории</Nav.Link>
+              <Nav.Link href="/admin/forms">Административная панель</Nav.Link>
             </Nav>
             {!!currentUser ? (
               <a class="lh_item" href="#" onClick={logout}>
