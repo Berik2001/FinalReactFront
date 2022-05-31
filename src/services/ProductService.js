@@ -2,8 +2,18 @@ import axios from 'axios';
 
 const PRODUCT_API_BASE_URL = 'http://localhost:8080/api/v1/products';
 class ProductService {
-  getProductByCategoryId({ id }) {
+  getProductByCategoryId(id) {
     return axios.get(PRODUCT_API_BASE_URL + `/${id}`);
+  }
+
+  updateProduct(product) {
+    return axios.put(PRODUCT_API_BASE_URL, product);
+  }
+  deleteProduct(id) {
+    return axios.delete(PRODUCT_API_BASE_URL, `/${id}`);
+  }
+  createProduct(product) {
+    return axios.post(PRODUCT_API_BASE_URL, product);
   }
 }
 export default new ProductService();

@@ -1,112 +1,167 @@
-import React, { useContext, useEffect, useState } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import React, { useEffect, useState } from 'react';
 import ProductService from '../../services/ProductService';
-import TablePagination from '@mui/material/TablePagination';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import EditIcon from '@mui/icons-material/Edit';
-import SvgIcon from '@mui/material/SvgIcon';
 import Header from '../../components/Header.js';
 import Footer from '../../components/Footer.js';
 import CategoryService from '../../services/CategoryService';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import { Table, Image, Tooltip, Popconfirm, Button, Select, Row, Col } from 'antd';
+import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
+import { ProductModal } from './ProductModal';
+
+const { Option } = Select;
 
 export default function ProductTable() {
   const [categories, setCurrentCategories] = React.useState();
   const [currentCategory, setCurrentCategory] = React.useState();
   const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const handleChange = (event) => {
-    setCurrentCategory(event.target.value);
-  };
+  const [modalProps, setModalProps] = useState({
+    visible: false,
+    actionType: null,
+    currentProduct: null,
+  });
 
   useEffect(() => {
     CategoryService.getCategories().then((response) => {
       setCurrentCategories(response.data);
     });
-    !!currentCategory &&
-      ProductService.getProductByCategoryId(currentCategory.id).then((response) => {
-        setProducts(response.data);
-      });
   }, []);
 
-  console.log(currentCategory);
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  useEffect(() => {
+    debugger;
+    !!currentCategory &&
+      ProductService.getProductByCategoryId(currentCategory).then((response) => {
+        setProducts(response.data);
+      });
+  }, [currentCategory]);
+
+  const onDelete = (id) => {
+    CategoryService.deleteCategory(id);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+  const closeModal = () => {
+    setModalProps({ visible: false });
   };
-  console.log(categories);
+
+  const columns = [
+    {
+      title: `№`,
+      dataIndex: 'id',
+      key: 'number',
+      fixed: 'left',
+      render: (text, record, index) => index + 1,
+    },
+    {
+      title: `Название продукта`,
+      dataIndex: 'name',
+      key: 'name',
+      fixed: 'left',
+    },
+    {
+      title: `Изображение`,
+      dataIndex: 'image',
+      key: 'image',
+      fixed: 'left',
+      render: (text, record, index) => <Image width={200} src={text} />,
+    },
+    {
+      title: `Описание`,
+      dataIndex: 'description',
+      key: 'description',
+      fixed: 'left',
+    },
+    {
+      title: `Стоимость`,
+      dataIndex: 'price',
+      key: 'price',
+      fixed: 'left',
+    },
+    {
+      title: `Редактировать`,
+      key: 'img',
+      fixed: 'left',
+      render: ({ id }) => (
+        <>
+          <Tooltip placement="top" title={'Редактировать'}>
+            <EditTwoTone
+              key="edit"
+              onClick={() => {
+                debugger;
+                setModalProps({
+                  visible: !modalProps.visible,
+                  actionType: 'edit',
+                  currentCategory: categories && categories.find((el) => el.id === id),
+                });
+              }}
+            />
+          </Tooltip>
+        </>
+      ),
+    },
+    {
+      title: `Удалить`,
+      key: 'action',
+      width: 150,
+      fixed: 'right',
+      align: 'center',
+      render: ({ id }) => (
+        <>
+          <Tooltip placement="top" title="Удалить">
+            <Popconfirm
+              placement="bottom"
+              title={'Вы действительно хотите удалить категорию?'}
+              onConfirm={() => onDelete(id)}
+              okText="Да"
+              cancelText="Нет">
+              <DeleteTwoTone key="delete" twoToneColor="#eb2f96" />
+            </Popconfirm>
+          </Tooltip>
+        </>
+      ),
+    },
+  ];
+
   return (
     <React.Fragment>
       <Header />
-      <Grid container spacing={1}>
-        <Grid item xs={4}></Grid>
-        <h1>Сначала выберите категорию</h1>
-        <br />
-        <InputLabel id="demo-simple-select-label" style={{ display: 'inline' }}>
-          Категории
-        </InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={currentCategory}
-          label="Категории"
-          onChange={handleChange}>
-          {categories &&
-            categories.map((el) => {
-              return <MenuItem value={el.id}>{el.name}</MenuItem>;
-            })}
-        </Select>
-      </Grid>
+      <Row>
+        <Col span={8}></Col>
+        <Col span={8}>
+          <h1>Выберите категорию</h1>
+          <Select
+            size="large"
+            placeholder="Выберите категорию"
+            optionFilterProp="children"
+            value={currentCategory}
+            onChange={(e) => {
+              debugger;
+              setCurrentCategory(e);
+            }}>
+            {!!categories &&
+              categories.map((el) => {
+                return <Option value={el.id}>{el.name}</Option>;
+              })}
+          </Select>
+        </Col>
+        <Col span={8}></Col>
+      </Row>
 
       {!!currentCategory && (
-        <TableContainer component={Paper} style={{ marginTop: 50, marginBottom: 50 }}>
-          <Table sx={{ minWidth: 700 }}>
-            <TableHead>
-              <TableRow>
-                <TableCell name="id">№</TableCell>
-                <TableCell name="title">Имя пользователя</TableCell>
-                <TableCell name="price">Отзыв</TableCell>
-                <TableCell name="stack">Вопрос</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {products
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, el) => (
-                  <TableRow key={row.id + row.name} tabIndex={-1}>
-                    <TableCell>{el + 1}</TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.email}</TableCell>
-                    <TableCell>{row.question}</TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 15]}
-            component="div"
-            count={products.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </TableContainer>
+        <>
+          <ProductModal modalProps={modalProps} closeModal={closeModal} />
+          <Button
+            size="large"
+            onClick={() =>
+              setModalProps({
+                visible: !modalProps.visible,
+                actionType: 'save',
+                currentProduct: null,
+              })
+            }
+            type="primary"
+            style={{ marginBottom: 1 }}>
+            Добавить продукт
+          </Button>
+          <Table columns={columns} dataSource={products}></Table>
+        </>
       )}
       <Footer />
     </React.Fragment>
