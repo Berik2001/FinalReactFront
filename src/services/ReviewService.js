@@ -7,5 +7,9 @@ class ReviewService {
   createReview(data) {
     return axios.post(REVIEW_API_BASE_URL + `/create`, data);
   }
+
+  updateReview(data) {
+    return axios.put(REVIEW_API_BASE_URL, data);
+  }
 }
 export default new ReviewService();

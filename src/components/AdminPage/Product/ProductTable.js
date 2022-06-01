@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import ProductService from '../../services/ProductService';
-import Header from '../../components/Header.js';
-import Footer from '../../components/Footer.js';
-import CategoryService from '../../services/CategoryService';
+import ProductService from '../../../services/ProductService';
+import CategoryService from '../../../services/CategoryService';
+import Header from '../../../components/Header.js';
+import Footer from '../../../components/Footer.js';
 import { Table, Image, Tooltip, Popconfirm, Button, Select, Row, Col } from 'antd';
 import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
 import { ProductModal } from './ProductModal';
@@ -121,7 +121,6 @@ export default function ProductTable() {
 
   return (
     <React.Fragment>
-      <Header />
       <Row>
         <Col span={8}></Col>
         <Col span={8}>
@@ -163,7 +162,6 @@ export default function ProductTable() {
           <Table columns={columns} dataSource={products}></Table>
         </>
       )}
-      <Footer />
     </React.Fragment>
   );
 }

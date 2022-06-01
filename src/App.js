@@ -14,10 +14,10 @@ import SpecificProduct from './components/ProductPage/SpecificProduct';
 import FormProduct from './pages/FormProduct.js';
 import AdminHome from './pages/AdminTable';
 import Booking from './pages/Booking';
+import Product from './pages/Product';
+import Category from './pages/Category';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ProductTable from './components/AdminPage/ProductTable';
-import CategoryTable from './components/AdminPage/CategoryTable';
 function App() {
   return (
     <div className="App">
@@ -37,8 +37,8 @@ function App() {
           <Route path="/review" element={<Review />} />
           <Route path="/admin/forms" element={<AdminHome />} />
           <Route path="/booking" element={<Booking />} />
-          <Route path="/admin/products" element={<ProductTable />} />
-          <Route path="/admin/category" element={<CategoryTable />} />
+          <Route path="/admin/products" element={<Product />} />
+          <Route path="/admin/category" element={<Category />} />
         </Routes>
       </Router>
     </div>

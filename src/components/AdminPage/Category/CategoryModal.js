@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Modal, message, Form, Input } from 'antd';
-import CategoryService from '../../services/CategoryService';
+import CategoryService from '../../../services/CategoryService';
 
 export function CategoryModal({ modalProps, closeModal }) {
   const { actionType, visible, currentCategory } = modalProps;

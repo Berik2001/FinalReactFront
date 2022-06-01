@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/Header.js';
-import Footer from '../../components/Footer.js';
-import CategoryService from '../../services/CategoryService';
+import Header from '../../../components/Header.js';
+import Footer from '../../../components/Footer.js';
+import CategoryService from '../../../services/CategoryService';
 import { Table, Image, Tooltip, Popconfirm, Button } from 'antd';
 import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
 import { CategoryModal } from './CategoryModal';
@@ -95,7 +95,6 @@ export default function CategoryTable() {
 
   return (
     <React.Fragment>
-      <Header />
       <CategoryModal modalProps={modalProps} closeModal={closeModal} />
       <Button
         size="large"
@@ -111,7 +110,6 @@ export default function CategoryTable() {
         Добавить категорию
       </Button>
       <Table columns={columns} dataSource={categories}></Table>
-      <Footer />
     </React.Fragment>
   );
 }
