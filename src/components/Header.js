@@ -60,31 +60,63 @@ const Header = () => {
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
-              <NavDropdown title="Категория товаров" id="navbarScrollingDropdown">
-                {categories.map((data) => {
-                  return (
-                    <NavDropdown.Item
-                      onClick={() => navigate(`/products/${data.id}`)}
-                      key={data.id}>
-                      {data.name}
-                    </NavDropdown.Item>
-                  );
-                })}
+              {!!currentUser && currentUser.role == 'customer' && (
+                <>
+                  <NavDropdown title="Категория товаров" id="navbarScrollingDropdown">
+                    {categories.map((data) => {
+                      return (
+                        <NavDropdown.Item
+                          onClick={() => navigate(`/products/${data.id}`)}
+                          key={data.id}>
+                          {data.name}
+                        </NavDropdown.Item>
+                      );
+                    })}
 
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action5">Something else here</NavDropdown.Item>
-              </NavDropdown>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="#action5">Something else here</NavDropdown.Item>
+                  </NavDropdown>
+                  <Nav.Link href="/">Home</Nav.Link>
+                  <Nav.Link href="/condition">Условия Аренды</Nav.Link>
+                  <Nav.Link href="/review">Отзывы</Nav.Link>
+                  <Nav.Link href="/guarantee">Гарантии</Nav.Link>
+                  <Nav.Link href="/delivery">Доставка</Nav.Link>
+                  <Nav.Link href="/contacts">Контакты</Nav.Link>
+                  <Nav.Link href="/about">О нас</Nav.Link>
+                </>
+              )}
+              {!currentUser && (
+                <>
+                  <NavDropdown title="Категория товаров" id="navbarScrollingDropdown">
+                    {categories.map((data) => {
+                      return (
+                        <NavDropdown.Item
+                          onClick={() => navigate(`/products/${data.id}`)}
+                          key={data.id}>
+                          {data.name}
+                        </NavDropdown.Item>
+                      );
+                    })}
 
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/condition">Условия Аренды</Nav.Link>
-              <Nav.Link href="/review">Отзывы</Nav.Link>
-              <Nav.Link href="/guarantee">Гарантии</Nav.Link>
-              <Nav.Link href="/delivery">Доставка</Nav.Link>
-              <Nav.Link href="/contacts">Контакты</Nav.Link>
-              <Nav.Link href="/about">О нас</Nav.Link>
-              <Nav.Link href="/admin/products"> Продукты</Nav.Link>
-              <Nav.Link href="/admin/category"> Категории</Nav.Link>
-              <Nav.Link href="/admin/forms">Административная панель</Nav.Link>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="#action5">Something else here</NavDropdown.Item>
+                  </NavDropdown>
+                  <Nav.Link href="/">Home</Nav.Link>
+                  <Nav.Link href="/condition">Условия Аренды</Nav.Link>
+                  <Nav.Link href="/review">Отзывы</Nav.Link>
+                  <Nav.Link href="/guarantee">Гарантии</Nav.Link>
+                  <Nav.Link href="/delivery">Доставка</Nav.Link>
+                  <Nav.Link href="/contacts">Контакты</Nav.Link>
+                  <Nav.Link href="/about">О нас</Nav.Link>
+                </>
+              )}
+              {!!currentUser && currentUser.role == 'admin' && (
+                <>
+                  <Nav.Link href="/admin/products"> Продукты</Nav.Link>
+                  <Nav.Link href="/admin/category"> Категории</Nav.Link>
+                  <Nav.Link href="/admin/forms">Административная панель</Nav.Link>
+                </>
+              )}
             </Nav>
             {!!currentUser ? (
               <a class="lh_item" href="#" onClick={logout}>
