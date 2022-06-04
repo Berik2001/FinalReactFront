@@ -23,7 +23,6 @@ export function ReviewModal({ modalProps, closeModal }) {
   const onUpdateCategory = () => {
     ReviewService.updateReview(form.getFieldsValue())
       .then((response) => {
-        debugger;
         message.success('Успешно обновлено', 4);
         form.resetFields();
         closeModal();

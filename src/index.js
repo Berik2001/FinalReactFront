@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery/dist/jquery.min.js';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import 'antd/dist/antd.min.css';
+import 'ant-design-pro/dist/ant-design-pro.css'; // Import whole style
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

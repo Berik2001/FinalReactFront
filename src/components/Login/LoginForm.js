@@ -37,7 +37,6 @@ const LoginForm = () => {
 
   const login = async (e) => {
     AuthService.login(user).then((response) => {
-      debugger;
       !!response.authenticationToken
         ? nav('/')
         : handleClick({

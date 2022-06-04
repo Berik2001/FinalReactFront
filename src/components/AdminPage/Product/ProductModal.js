@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { Modal, message, Form, Input } from 'antd';
-import CategoryService from '../../../services/CategoryService';
 import ProductService from '../../../services/ProductService';
 
 export function ProductModal({ modalProps, closeModal }) {
-  const { actionType, visible, currentProduct } = modalProps;
+  const { actionType, visible, currentProduct, currentCategory } = modalProps;
   const [form] = Form.useForm();
 
   const modalTitle = actionType === 'edit' ? `Редактирование продукта` : 'Создание продукта';
@@ -15,6 +14,11 @@ export function ProductModal({ modalProps, closeModal }) {
     image: null,
     description: null,
     name: null,
+    category: {
+      id: null,
+      img: null,
+      name: null,
+    },
   };
 
   useEffect(() => {
@@ -22,7 +26,7 @@ export function ProductModal({ modalProps, closeModal }) {
   }, [actionType, currentProduct, form]);
 
   const onCreateCategory = () => {
-    ProductService.createProduct(form.getFieldsValue())
+    ProductService.createProduct({ category: { id: currentCategory }, ...form.getFieldsValue() })
       .then((response) => {
         message.success('Успешно создано', 4);
         form.resetFields();
@@ -34,7 +38,7 @@ export function ProductModal({ modalProps, closeModal }) {
       });
   };
 
-  const onUpdateCategory = () => {
+  const onUpdateProduct = () => {
     ProductService.updateProduct(form.getFieldsValue())
       .then((response) => {
         message.success('Успешно обновлено', 4);
@@ -51,7 +55,7 @@ export function ProductModal({ modalProps, closeModal }) {
     <Modal
       title={modalTitle}
       visible={visible}
-      onOk={actionType === 'edit' ? onUpdateCategory : onCreateCategory}
+      onOk={actionType === 'edit' ? onUpdateProduct : onCreateCategory}
       onCancel={() => closeModal()}
       okText={'Сохранить'}
       cancelText={'Отменить'}

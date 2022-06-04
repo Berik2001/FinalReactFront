@@ -13,6 +13,7 @@
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
     "ajax": "^0.0.4",
+    "ant-design-pro": "^2.3.2",
     "antd": "^4.20.7",
     "axios": "^0.27.2",
     "bootstrap": "^5.1.3",

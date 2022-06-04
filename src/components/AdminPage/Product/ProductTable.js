@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProductService from '../../../services/ProductService';
 import CategoryService from '../../../services/CategoryService';
-import Header from '../../../components/Header.js';
-import Footer from '../../../components/Footer.js';
 import { Table, Image, Tooltip, Popconfirm, Button, Select, Row, Col } from 'antd';
 import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
 import { ProductModal } from './ProductModal';
@@ -23,10 +21,9 @@ export default function ProductTable() {
     CategoryService.getCategories().then((response) => {
       setCurrentCategories(response.data);
     });
-  }, []);
+  }, [modalProps]);
 
   useEffect(() => {
-    debugger;
     !!currentCategory &&
       ProductService.getProductByCategoryId(currentCategory).then((response) => {
         setProducts(response.data);
@@ -35,6 +32,7 @@ export default function ProductTable() {
 
   const onDelete = (id) => {
     CategoryService.deleteCategory(id);
+    setModalProps({ visible: false });
   };
 
   const closeModal = () => {
@@ -84,11 +82,10 @@ export default function ProductTable() {
             <EditTwoTone
               key="edit"
               onClick={() => {
-                debugger;
                 setModalProps({
                   visible: !modalProps.visible,
                   actionType: 'edit',
-                  currentCategory: categories && categories.find((el) => el.id === id),
+                  currentProduct: products && products.find((el) => el.id === id),
                 });
               }}
             />
@@ -107,7 +104,7 @@ export default function ProductTable() {
           <Tooltip placement="top" title="Удалить">
             <Popconfirm
               placement="bottom"
-              title={'Вы действительно хотите удалить категорию?'}
+              title={'Вы действительно хотите удалить продукт?'}
               onConfirm={() => onDelete(id)}
               okText="Да"
               cancelText="Нет">
@@ -131,7 +128,6 @@ export default function ProductTable() {
             optionFilterProp="children"
             value={currentCategory}
             onChange={(e) => {
-              debugger;
               setCurrentCategory(e);
             }}>
             {!!categories &&
@@ -153,6 +149,7 @@ export default function ProductTable() {
                 visible: !modalProps.visible,
                 actionType: 'save',
                 currentProduct: null,
+                currentCategory: currentCategory,
               })
             }
             type="primary"

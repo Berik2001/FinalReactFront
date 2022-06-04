@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
+import React, { useState, useEffect, Fragment } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import '../App.css';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
 import CategoryService from '../services/CategoryService';
 import AuthService from '../services/auth.service';
+import { Select } from 'antd';
 
 import { useNavigate } from 'react-router-dom';
+import ProductService from '../services/ProductService';
+
+const { Option } = Select;
 const Header = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
 
   useEffect(() => {
@@ -21,8 +23,8 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    CategoryService.getCategories().then((getData) => {
-      setCategories(getData.data);
+    ProductService.getAllProduct().then((getData) => {
+      setProducts(getData.data);
     });
   }, []);
 
@@ -31,10 +33,32 @@ const Header = () => {
       setCategories(getData.data);
     });
   }, []);
+
   const logout = async (e) => {
     AuthService.logout();
     window.location.reload();
   };
+
+  function onChange(value) {
+    console.log(`selected ${value}`);
+  }
+
+  function onBlur(e) {
+    debugger;
+    console.log('blur');
+  }
+
+  function onFocus() {
+    console.log('focus');
+  }
+
+  function onSearch(val) {
+    console.log('search:', val);
+  }
+
+  function onClickOption(id) {
+    console.log(id);
+  }
 
   return (
     <div>
@@ -138,17 +162,25 @@ const Header = () => {
         </Container>
       </Navbar>
       <Navbar bg="light" className="d-flex justify-content-center">
-        <Form className="d-flex">
-          <FormControl
-            id="searchNav"
-            type="search"
-            placeholder="Search"
-            className="me-2"
-            aria-label="Search"
-          />
-
-          <Button variant="outline-success">Search</Button>
-        </Form>
+        <Select
+          showSearch
+          style={{ width: 800 }}
+          placeholder="Поиск"
+          optionFilterProp="children"
+          onChange={onChange}
+          onFocus={onFocus}
+          onBlur={(e) => onBlur(e)}
+          onSearch={onSearch}
+          filterOption={(search, item) => {
+            debugger;
+            return item.children.toLowerCase().indexOf(search.toLowerCase()) >= 0;
+          }}>
+          {products.map((item) => (
+            <Option key={item.id} value={item.id} onClick={() => onClickOption(item.id)}>
+              {item.name}
+            </Option>
+          ))}
+        </Select>
       </Navbar>
     </div>
   );

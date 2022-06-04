@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../../components/Header.js';
-import Footer from '../../../components/Footer.js';
 import CategoryService from '../../../services/CategoryService';
 import { Table, Image, Tooltip, Popconfirm, Button } from 'antd';
 import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
@@ -17,10 +15,11 @@ export default function CategoryTable() {
     CategoryService.getCategories().then((response) => {
       setCategories(response.data);
     });
-  }, []);
+  }, [modalProps]);
 
   const onDelete = (id) => {
     CategoryService.deleteCategory(id);
+    setModalProps({ visible: false });
   };
 
   const closeModal = () => {
@@ -58,7 +57,6 @@ export default function CategoryTable() {
             <EditTwoTone
               key="edit"
               onClick={() => {
-                debugger;
                 setModalProps({
                   visible: !modalProps.visible,
                   actionType: 'edit',

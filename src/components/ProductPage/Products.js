@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Container, Row, Col, Image } from 'react-bootstrap';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import ProductService from '../../services/ProductService';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -28,12 +28,13 @@ const Products = () => {
     setSelectedProduct(products.find((i) => i.id == id));
   };
   const toOrder = () => {
-    navigate('/booking', { state: { product: selectedProduct } });
+    navigate(`/booking/${selectedProduct.id}`, { state: { product: selectedProduct } });
   };
   const handleClose = () => setOpen(false);
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    ProductService.getProductByCategoryId({ id }).then((getData) => {
+    debugger;
+    ProductService.getProductByCategoryId(id).then((getData) => {
       setProducts(getData.data);
     });
   }, []);

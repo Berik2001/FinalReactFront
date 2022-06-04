@@ -62,7 +62,6 @@ export default function QuestionTable() {
             <EditTwoTone
               key="edit"
               onClick={() => {
-                debugger;
                 setModalProps({
                   visible: !modalProps.visible,
                   actionType: 'edit',

@@ -5,15 +5,12 @@ class CategoryService {
     return axios.get(CATEGORY_API_BASE_URL + `/categories`);
   }
   updateCategory(category) {
-    debugger;
     return axios.put(CATEGORY_API_BASE_URL + `/categories`, category);
   }
   deleteCategory(id) {
-    debugger;
     return axios.delete(CATEGORY_API_BASE_URL + `/categories/${id}`);
   }
   createCategory(category) {
-    debugger;
     return axios.post(CATEGORY_API_BASE_URL + `/categories`, category);
   }
 }
