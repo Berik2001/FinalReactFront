@@ -21,6 +21,9 @@ export default function ProductTable() {
     CategoryService.getCategories().then((response) => {
       setCurrentCategories(response.data);
     });
+    ProductService.getProductByCategoryId(currentCategory).then((response) => {
+      setProducts(response.data);
+    });
   }, [modalProps]);
 
   useEffect(() => {
@@ -29,6 +32,7 @@ export default function ProductTable() {
         setProducts(response.data);
       });
   }, [currentCategory]);
+
 
   const onDelete = (id) => {
     CategoryService.deleteCategory(id);

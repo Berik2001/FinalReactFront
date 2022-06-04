@@ -36,15 +36,17 @@ const Header = () => {
 
   const logout = async (e) => {
     AuthService.logout();
+    navigate('/')
     window.location.reload();
   };
 
+
   function onChange(value) {
+    navigate(`/booking/${value}`, { state: { product: products.find((i) => i.id == value) } });
     console.log(`selected ${value}`);
   }
 
   function onBlur(e) {
-    debugger;
     console.log('blur');
   }
 
@@ -139,6 +141,7 @@ const Header = () => {
                   <Nav.Link href="/admin/products"> Продукты</Nav.Link>
                   <Nav.Link href="/admin/category"> Категории</Nav.Link>
                   <Nav.Link href="/admin/forms">Административная панель</Nav.Link>
+                  <Nav.Link href="/admin/orders">Заказы</Nav.Link>
                 </>
               )}
             </Nav>
@@ -172,7 +175,6 @@ const Header = () => {
           onBlur={(e) => onBlur(e)}
           onSearch={onSearch}
           filterOption={(search, item) => {
-            debugger;
             return item.children.toLowerCase().indexOf(search.toLowerCase()) >= 0;
           }}>
           {products.map((item) => (

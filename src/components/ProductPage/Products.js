@@ -33,7 +33,6 @@ const Products = () => {
   const handleClose = () => setOpen(false);
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    debugger;
     ProductService.getProductByCategoryId(id).then((getData) => {
       setProducts(getData.data);
     });

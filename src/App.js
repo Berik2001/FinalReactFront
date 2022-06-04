@@ -16,6 +16,8 @@ import AdminHome from './pages/AdminTable';
 import Booking from './pages/Booking';
 import Product from './pages/Product';
 import Category from './pages/Category';
+import AdminOrder from './pages/AdminOrder';
+
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
@@ -39,6 +41,7 @@ function App() {
           <Route path="/booking/:id" element={<Booking />} />
           <Route path="/admin/products" element={<Product />} />
           <Route path="/admin/category" element={<Category />} />
+          <Route path="/admin/orders" element={<AdminOrder />} />
         </Routes>
       </Router>
     </div>

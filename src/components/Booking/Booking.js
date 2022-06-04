@@ -1,29 +1,77 @@
 import React, { useEffect, useState } from 'react';
-import { DatePicker, Space, Button, Image } from 'antd';
+import { DatePicker, Space, Button, message } from 'antd';
 import { useLocation } from 'react-router-dom';
 import { Layout } from 'antd';
-const { RangePicker } = DatePicker;
+import OrderService from '../../services/OrderService';
+import AuthService from '../../services/auth.service';
+import moment from 'moment';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { RangePicker } = DatePicker;
 
 const Booking = () => {
   const location = useLocation();
   const [currentProduct, setCurrentProduct] = useState();
   const [totalCount, setTotalCount] = useState();
+  const [currentUser, setCurrentUser] = useState([]);
+
+  useEffect(() => {
+    setCurrentUser(AuthService.getCurrentUser());
+  }, []);
 
   useEffect(() => {
     setCurrentProduct(location.state.product);
     setTotalCount(location.state.product.price);
   }, []);
-  const [startDate, setStartDate] = useState(new Date());
+
+  const [date, setDate] = useState([]);
   const [counter, setCounter] = useState(1);
   const handleIncrement = () => {
     setCounter(counter + 1);
-    setTotalCount((counter + 1) * currentProduct.price);
+    if (!!date && date.length > 0) {
+      const count = moment(date[1]).diff(moment(date[0]), 'days');
+      if (count >= 3) {
+        setTotalCount(((counter - 1) * currentProduct.price) - (((counter - 1) * currentProduct.price) * 0.1)); //eslint-disable-line
+      }
+    } else {
+      setTotalCount((counter + 1) * currentProduct.price);
+    }
   };
 
+  const toOrder = () => {
+    OrderService.createOrder({
+      productName: currentProduct.name,
+      username: currentUser.username,
+      totalPrice: totalCount,
+      startDate: date[0],
+      endDate: date[1],
+    }).then((response) => {
+      message.success('Успешно создано', 4);
+    })
+    .catch(() => {
+      message.error('Ошибка при создании', 4);
+    });
+  };
   const handleDecrement = () => {
     setCounter(counter - 1);
+    if (!!date && date.length > 0) {
+      const count = moment(date[1]).diff(moment(date[0]), 'days');
+      if (count >= 3) {
+        setTotalCount(((counter - 1) * currentProduct.price) - (((counter - 1) * currentProduct.price) * 0.1)); //eslint-disable-line
+      }
+    } else {
+      setTotalCount((counter - 1) * currentProduct.price);
+    }
+  };
+  const onChange = (date, dateString) => {
+    setDate(dateString);
+    if (!!dateString && dateString.length > 0) {
+      const count = moment(dateString[1]).diff(moment(dateString[0]), 'days');
+      if (count >= 3) {
+        setTotalCount((counter) * currentProduct.price - (((counter) * currentProduct.price) * 0.1)); //eslint-disable-line
+      }
+    } else {
+      setTotalCount((counter) * currentProduct.price);
+    }
   };
   return (
     <React.Fragment>
@@ -40,7 +88,7 @@ const Booking = () => {
                           alt="Web Studio"
                           className="img-fluid"
                           id="cardImage"
-                          src="https://www.tradeinn.com/f/13735/137354168/apple-iphone-11-pro-64gb-5.8.jpg"
+                          src={currentProduct.image}
                         />
                       </div>
                     </div>
@@ -49,7 +97,10 @@ const Booking = () => {
                         <h3>Выберите период аренды</h3>
                         <div className="datePicker">
                           <Space direction="vertical" size={12}>
-                            <RangePicker />
+                            <RangePicker
+                              placeholder={['Дата начала аренды', 'Дата конца аренды']}
+                              onChange={onChange}
+                            />
                           </Space>
                         </div>
                         <div>
@@ -78,8 +129,12 @@ const Booking = () => {
                               {counter > 0 && <Button onClick={handleDecrement}>-</Button>}
                             </div>
                             <span className="value">
-                              <button type="button" className="btn btn-primary">
-                                Арендоввать
+                              <button
+                                onClick={toOrder}
+                                type="button"
+                                style={{ marginTop: '40px' }}
+                                className="btn btn-primary">
+                                Арендовать
                               </button>
                             </span>
                           </div>
