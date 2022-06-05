@@ -14,13 +14,11 @@ export function OrderModal({ modalProps, closeModal }) {
     name: null,
     img: null,
   };
-  debugger;
   useEffect(() => {
     actionType === 'edit' && form.setFieldsValue(currentOrder);
   }, [actionType, currentOrder, form]);
 
   const onUpdateOrder = () => {
-    debugger;
     OrderService.updateOrder({
       ...form.getFieldsValue(),
       startDate: form.getFieldValue('date')[0].format('YYYY-MM-DD'),

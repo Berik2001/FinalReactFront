@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useParams } from 'react';
 import { DatePicker, Space, Button, message } from 'antd';
 import { useLocation } from 'react-router-dom';
 import { Layout } from 'antd';
@@ -13,7 +13,6 @@ const Booking = () => {
   const [currentProduct, setCurrentProduct] = useState();
   const [totalCount, setTotalCount] = useState();
   const [currentUser, setCurrentUser] = useState([]);
-
   useEffect(() => {
     setCurrentUser(AuthService.getCurrentUser());
   }, []);
@@ -21,7 +20,7 @@ const Booking = () => {
   useEffect(() => {
     setCurrentProduct(location.state.product);
     setTotalCount(location.state.product.price);
-  }, []);
+  }, [location.state.product]);
 
   const [date, setDate] = useState([]);
   const [counter, setCounter] = useState(1);
@@ -30,7 +29,7 @@ const Booking = () => {
     if (!!date && date.length > 0) {
       const count = moment(date[1]).diff(moment(date[0]), 'days');
       if (count >= 3) {
-        setTotalCount(((counter - 1) * currentProduct.price) - (((counter - 1) * currentProduct.price) * 0.1)); //eslint-disable-line
+        setTotalCount(((counter + 1) * currentProduct.price) - (((counter + 1) * currentProduct.price) * 0.1)); //eslint-disable-line
       }
     } else {
       setTotalCount((counter + 1) * currentProduct.price);
@@ -56,10 +55,19 @@ const Booking = () => {
     if (!!date && date.length > 0) {
       const count = moment(date[1]).diff(moment(date[0]), 'days');
       if (count >= 3) {
-        setTotalCount(((counter - 1) * currentProduct.price) - (((counter - 1) * currentProduct.price) * 0.1)); //eslint-disable-line
+        if(counter>0){
+          setTotalCount(((counter - 1) * currentProduct.price) - (((counter - 1) * currentProduct.price) * 0.1)); //eslint-disable-line
+        }
+        else{
+        setTotalCount(0);
+        }
       }
     } else {
-      setTotalCount((counter - 1) * currentProduct.price);
+      if(counter>0){
+        setTotalCount((counter - 1) * currentProduct.price);
+      }else{
+        setTotalCount(0);
+      }
     }
   };
   const onChange = (date, dateString) => {
@@ -73,6 +81,7 @@ const Booking = () => {
       setTotalCount((counter) * currentProduct.price);
     }
   };
+  console.log(currentProduct)
   return (
     <React.Fragment>
       <Layout>
@@ -94,6 +103,7 @@ const Booking = () => {
                     </div>
                     <div className="col-md-6 col-lg-5 ml-auto d-flex ">
                       <div>
+                      { moment(date[1]).diff(moment(date[0]), 'days')>= 3 && <h3>При аренде больше 3 дней, действует скидка в размере 10%</h3>}
                         <h3>Выберите период аренды</h3>
                         <div className="datePicker">
                           <Space direction="vertical" size={12}>
@@ -105,8 +115,8 @@ const Booking = () => {
                         </div>
                         <div>
                           <div className="price_tech mt-4">
-                            <span className="name">Стоимость техники:</span>
-                            <span className="value">120 000 KZT</span>
+                            <span className="name">Стоимость техники: </span>
+                            <span className="value">{currentProduct.productPrice}</span>
                           </div>
                         </div>
                         <div>

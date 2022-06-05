@@ -36,7 +36,7 @@ const Products = () => {
     ProductService.getProductByCategoryId(id).then((getData) => {
       setProducts(getData.data);
     });
-  }, []);
+  }, [id]);
 
   return (
     <Container>

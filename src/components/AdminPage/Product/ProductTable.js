@@ -77,6 +77,12 @@ export default function ProductTable() {
       fixed: 'left',
     },
     {
+      title: `Стоимость техники`,
+      dataIndex: 'productPrice',
+      key: 'productPrice',
+      fixed: 'left',
+    },
+    {
       title: `Редактировать`,
       key: 'img',
       fixed: 'left',

@@ -36,14 +36,12 @@ const Header = () => {
 
   const logout = async (e) => {
     AuthService.logout();
-    navigate('/')
+    navigate('/');
     window.location.reload();
   };
 
-
   function onChange(value) {
     navigate(`/booking/${value}`, { state: { product: products.find((i) => i.id == value) } });
-    console.log(`selected ${value}`);
   }
 
   function onBlur(e) {
@@ -117,7 +115,9 @@ const Header = () => {
                     {categories.map((data) => {
                       return (
                         <NavDropdown.Item
-                          onClick={() => navigate(`/products/${data.id}`)}
+                          onClick={() => {
+                            navigate(`/products/${data.id}`)
+                          }}
                           key={data.id}>
                           {data.name}
                         </NavDropdown.Item>

@@ -14,6 +14,7 @@ export function ProductModal({ modalProps, closeModal }) {
     image: null,
     description: null,
     name: null,
+    productPrice:null,
     category: {
       id: null,
       img: null,
@@ -83,7 +84,13 @@ export function ProductModal({ modalProps, closeModal }) {
         </Form.Item>
         <Form.Item
           name="price"
-          label={'Стоимость продукта'}
+          label={'Стоимость 1 дня аренды'}
+          rules={[{ required: true, message: requiredMessage }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="productPrice"
+          label={'Стоимость техники'}
           rules={[{ required: true, message: requiredMessage }]}>
           <Input />
         </Form.Item>
