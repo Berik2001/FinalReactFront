@@ -57,6 +57,7 @@ const Booking = () => {
       });
   };
   const handleDecrement = () => {
+    debugger;
     setCounter(counter - 1);
     if (!!date && date.length > 0) {
       const count = moment(date[1]).diff(moment(date[0]), 'days');
@@ -68,6 +69,8 @@ const Booking = () => {
         } else {
           setTotalCount(0);
         }
+      } else {
+        setTotalCount((counter - 1) * currentProduct.price);
       }
     } else {
       if (counter > 0) {
