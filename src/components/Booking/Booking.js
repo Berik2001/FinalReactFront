@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useParams } from 'react';
+import React, { useEffect, useState, useParams } from 'react';
 import { DatePicker, Space, Button, message } from 'antd';
 import { useLocation } from 'react-router-dom';
 import { Layout } from 'antd';
@@ -26,10 +26,15 @@ const Booking = () => {
   const [counter, setCounter] = useState(1);
   const handleIncrement = () => {
     setCounter(counter + 1);
+    debugger;
     if (!!date && date.length > 0) {
       const count = moment(date[1]).diff(moment(date[0]), 'days');
       if (count >= 3) {
-        setTotalCount(((counter + 1) * currentProduct.price) - (((counter + 1) * currentProduct.price) * 0.1)); //eslint-disable-line
+        setTotalCount(
+          (counter + 1) * currentProduct.price - (counter + 1) * currentProduct.price * 0.1,
+        ); //eslint-disable-line
+      } else {
+        setTotalCount((counter + 1) * currentProduct.price);
       }
     } else {
       setTotalCount((counter + 1) * currentProduct.price);
@@ -43,29 +48,31 @@ const Booking = () => {
       totalPrice: totalCount,
       startDate: date[0],
       endDate: date[1],
-    }).then((response) => {
-      message.success('Успешно создано', 4);
     })
-    .catch(() => {
-      message.error('Ошибка при создании', 4);
-    });
+      .then((response) => {
+        message.success('Успешно создано', 4);
+      })
+      .catch(() => {
+        message.error('Ошибка при создании', 4);
+      });
   };
   const handleDecrement = () => {
     setCounter(counter - 1);
     if (!!date && date.length > 0) {
       const count = moment(date[1]).diff(moment(date[0]), 'days');
       if (count >= 3) {
-        if(counter>0){
-          setTotalCount(((counter - 1) * currentProduct.price) - (((counter - 1) * currentProduct.price) * 0.1)); //eslint-disable-line
-        }
-        else{
-        setTotalCount(0);
+        if (counter > 0) {
+          setTotalCount(
+            (counter - 1) * currentProduct.price - (counter - 1) * currentProduct.price * 0.1,
+          ); //eslint-disable-line
+        } else {
+          setTotalCount(0);
         }
       }
     } else {
-      if(counter>0){
+      if (counter > 0) {
         setTotalCount((counter - 1) * currentProduct.price);
-      }else{
+      } else {
         setTotalCount(0);
       }
     }
@@ -75,13 +82,15 @@ const Booking = () => {
     if (!!dateString && dateString.length > 0) {
       const count = moment(dateString[1]).diff(moment(dateString[0]), 'days');
       if (count >= 3) {
-        setTotalCount((counter) * currentProduct.price - (((counter) * currentProduct.price) * 0.1)); //eslint-disable-line
+        setTotalCount(counter * currentProduct.price - counter * currentProduct.price * 0.1); //eslint-disable-line
+      } else {
+        setTotalCount(counter * currentProduct.price);
       }
     } else {
-      setTotalCount((counter) * currentProduct.price);
+      setTotalCount(counter * currentProduct.price);
     }
   };
-  console.log(currentProduct)
+  console.log(currentProduct);
   return (
     <React.Fragment>
       <Layout>
@@ -103,7 +112,9 @@ const Booking = () => {
                     </div>
                     <div className="col-md-6 col-lg-5 ml-auto d-flex ">
                       <div>
-                      { moment(date[1]).diff(moment(date[0]), 'days')>= 3 && <h3>При аренде больше 3 дней, действует скидка в размере 10%</h3>}
+                        {moment(date[1]).diff(moment(date[0]), 'days') >= 3 && (
+                          <h3>При аренде больше 3 дней, действует скидка в размере 10%</h3>
+                        )}
                         <h3>Выберите период аренды</h3>
                         <div className="datePicker">
                           <Space direction="vertical" size={12}>
