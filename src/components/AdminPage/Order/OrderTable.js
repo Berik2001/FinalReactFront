@@ -73,6 +73,18 @@ export default function OrderTable() {
       fixed: 'left',
     },
     {
+      title: `Адрес`,
+      dataIndex: 'address',
+      key: 'address',
+      fixed: 'left',
+    },
+    {
+      title: `Номер телефона`,
+      dataIndex: 'phone',
+      key: 'phone',
+      fixed: 'left',
+    },
+    {
       title: `Редактировать`,
       key: 'img',
       fixed: 'left',

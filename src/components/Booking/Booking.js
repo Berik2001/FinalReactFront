@@ -5,6 +5,7 @@ import { Layout } from 'antd';
 import OrderService from '../../services/OrderService';
 import AuthService from '../../services/auth.service';
 import moment from 'moment';
+import { BookingModal } from './BookingModal';
 
 const { RangePicker } = DatePicker;
 
@@ -24,6 +25,12 @@ const Booking = () => {
 
   const [date, setDate] = useState([]);
   const [counter, setCounter] = useState(1);
+  const [modalProps, setModalProps] = useState({
+    visible: false,
+    actionType: null,
+    bookingInfo: null,
+  });
+
   const handleIncrement = () => {
     setCounter(counter + 1);
     debugger;
@@ -42,19 +49,19 @@ const Booking = () => {
   };
 
   const toOrder = () => {
-    OrderService.createOrder({
-      productName: currentProduct.name,
-      username: currentUser.username,
-      totalPrice: totalCount,
-      startDate: date[0],
-      endDate: date[1],
-    })
-      .then((response) => {
-        message.success('Успешно создано', 4);
-      })
-      .catch(() => {
-        message.error('Ошибка при создании', 4);
-      });
+    setModalProps({
+      visible: !modalProps.visible,
+      actionType: 'edit',
+      bookingInfo: {
+        productName: currentProduct.name,
+        username: currentUser.username,
+        totalPrice: totalCount,
+        startDate: date[0],
+        endDate: date[1],
+      }
+    });
+   
+      
   };
   const handleDecrement = () => {
     debugger;
@@ -93,13 +100,20 @@ const Booking = () => {
       setTotalCount(counter * currentProduct.price);
     }
   };
+  const closeModal = () => {
+    setModalProps({ visible: false });
+  };
+
   console.log(currentProduct);
   return (
     <React.Fragment>
       <Layout>
         <Layout>
+          
           {currentProduct && (
             <div>
+      <BookingModal modalProps={modalProps} closeModal={closeModal} />
+
               <section className="section mt-5">
                 <div className="container">
                   <div className="row" id="shadow">

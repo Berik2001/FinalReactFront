@@ -35,7 +35,7 @@ export default function ProductTable() {
 
 
   const onDelete = (id) => {
-    CategoryService.deleteCategory(id);
+    ProductService.deleteProduct(id);
     setModalProps({ visible: false });
   };
 

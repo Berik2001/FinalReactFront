@@ -77,6 +77,18 @@ export function OrderModal({ modalProps, closeModal }) {
           rules={[{ required: true, message: requiredMessage }]}>
           <Input />
         </Form.Item>
+        <Form.Item
+          name="address"
+          label={'Адрес'}
+          rules={[{ required: true, message: requiredMessage }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="phone"
+          label={'Номер телефона'}
+          rules={[{ required: true, message: requiredMessage }]}>
+          <Input />
+        </Form.Item>
       </Form>
     </Modal>
   );
