@@ -1,0 +1,46 @@
+.lh_item {
+    display: flex;
+    justify-content: space-between;
+    width: auto;
+  }
+  .lh_item h1 {
+    color: black;
+    font-size: 1em;
+    font-family: "Montserrat";
+    font-weight: 700;
+  }
+  .icon {
+    margin-right: 0.5em;
+    display: flex;
+    align-self: center;
+  }
+  .icon img {
+    width: 25px;
+  }
+ 
+  .lh_item h6 {
+    color: black;
+    font-family: "Montserrat";
+    font-weight: 700;
+    font-size: 1em;
+    text-align: center;
+  }
+  #searchNav{
+    width: 800px;
+  }
+  @media (max-width: 1060px) {
+    #searchNav{
+      width: 500px;
+    }
+  }
+  @media (max-width: 768px) {
+    #searchNav{
+      width: 350px;
+    }
+  }
+ 
+
+/* .products{
+  object-fit: cover;
+} */
+  
